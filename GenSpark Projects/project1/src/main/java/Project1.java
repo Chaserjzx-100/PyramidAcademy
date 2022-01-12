@@ -1,10 +1,21 @@
 import java.util.Scanner;
 
-public class Project1 {
-    public static void main(String [] args ){
+public class Project1 extends Exception{
+    public static void main(String [] args ) {
         System.out.println(message());
         Scanner input = new Scanner(System.in);
-        int choice = input.nextInt();
+        int choice;
+        try {
+            choice = input.nextInt();
+            while(choice > 2 || choice < 1){
+                System.out.println("Enter 1 or 2 please.");
+                choice = input.nextInt();
+            }
+
+        } catch (Exception e){
+             throw new NumberFormatException("Caught Exception: Enter valid integer");
+        }
+
         if (choice == 1){
             System.out.println(cave1());
         }
