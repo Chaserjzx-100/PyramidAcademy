@@ -7,7 +7,16 @@ public class Project2 {
         System.out.println(message());
 
         //Takes in users name.
-        String username = input.nextLine();
+        String username;
+        try {
+            username = input.nextLine();
+            if(username.length() > 10){
+                throw new IllegalArgumentException("Enter a valid name");
+            }
+        } catch (Exception e){
+            throw new IllegalArgumentException();
+        }
+
         //Displays message back with users name included.
         System.out.println(name(username));
 
@@ -24,7 +33,18 @@ public class Project2 {
 
             while (guess != magicNum) {
                 count++;
-                guess = input.nextInt();
+                try{
+                    guess = input.nextInt();
+                    if (guess < 1 || guess > 20){
+                        throw new IllegalArgumentException();
+                    }
+                } catch (IllegalArgumentException e){
+                    throw new IllegalArgumentException("Number has to be between 1 & 20");
+                }
+                catch (Exception e){
+                    throw new NumberFormatException("Enter a valid Integer.");
+                }
+
                 if (count == tries){
                     System.out.println("You are out of try's. :(");
                     break;
@@ -42,17 +62,20 @@ public class Project2 {
 
             System.out.println("Play again? (y / n)");
             input.nextLine();
-            rematch = input.nextLine();
+//            rematch = input.nextLine();
+            try{
+                rematch = input.nextLine();
+            } catch (Exception e){
+                throw new IllegalArgumentException("Please choose y or n.");
+            }
             count = 0;
 
         }while (rematch.equals("y"));
         System.out.println("Game over.");
 
-
-        // }
     }
     public static String message(){
-        String message = "Hello! What is your name?";
+        String message = "Hello! What is your first name?";
         return message;
     }
     public static String name(String name){

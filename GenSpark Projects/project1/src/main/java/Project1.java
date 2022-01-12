@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Project1 extends Exception{
+public class Project1 {
     public static void main(String [] args ) {
         System.out.println(message());
         Scanner input = new Scanner(System.in);
