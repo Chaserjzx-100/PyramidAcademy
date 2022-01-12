@@ -8,7 +8,7 @@ public class Project1 extends Exception{
         try {
             choice = input.nextInt();
             while(choice > 2 || choice < 1){
-                System.out.println("Enter 1 or 2 please.");
+                System.out.println("Enter 1 or 2 please!");
                 choice = input.nextInt();
             }
 
