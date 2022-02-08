@@ -1,10 +1,12 @@
 public class Goblin {
     private int health;
     private int strength;
+    public char goblin;
 
     public Goblin(){
         health = 100;
-        strength = 25;
+        strength = (int)Math.floor(Math.random()*25)+1;
+        goblin = '\uE814';
     }
     public Goblin(int energy, int strength1) {
         health = energy;
@@ -21,6 +23,9 @@ public class Goblin {
     }
     public void setStrength(int userStrength){
         this.strength = userStrength;
+    }
+    public char getGoblin(){
+        return goblin;
     }
         public String attack(Object person){
             var human = (Human) person;
