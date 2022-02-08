@@ -14,8 +14,8 @@ public class hangman {
         int wrong = 0;
         int maxErr = 6;
         String rematch = "";
-        do{//Main loop for game.
-            while(wrong < maxErr){
+        //Main loop for game.
+            while(wrong < maxErr || rematch.equalsIgnoreCase("yes")){
                 System.out.println("Guess a letter: ");
                 String guess = input.next();
                 if(guess.length() > 1){
@@ -48,6 +48,17 @@ public class hangman {
 
                 if(wordToFind.contentEquals(new String(wordFound))){
                     System.out.println("You win!!");
+                    System.out.println("Would you like to play again? (yes/no)");
+                    input.nextLine();
+                    rematch = input.nextLine();
+                    if (rematch.equalsIgnoreCase("yes")){
+                        wrong = 0;
+                        missed.clear();
+                        for (int i = 0; i < wordFound.length; i++){
+                            wordFound[i] = '_';
+                        }
+                    }
+                    else
                     break;
                 }
                 else {
@@ -56,20 +67,23 @@ public class hangman {
                 }
                 if(maxErr == wrong){
                     System.out.println("You are out of guesses.");
+                    System.out.println("Would you like to play again? (yes/no)");
+                    input.nextLine();
+                    rematch = input.nextLine();
+                    if (rematch.equalsIgnoreCase("no")){
+                        break;
+                    }
+                    /*Reset variables if a new game is started.*/
+                    wrong = 0;
+                    missed.clear();
+                    for (int i = 0; i < wordFound.length; i++){
+                        wordFound[i] = '_';
+                    }
                 }
+
             }
-            System.out.println("Would you like to play again? (yes/no)");
-            input.nextLine();
-            rematch = input.nextLine();
-            /*Reset variables if a new game is started.*/
-            wrong = 0;
-            missed.clear();
-            for (int i = 0; i < wordFound.length; i++){
-                wordFound[i] = '_';
-            }
-        }
-        while(rematch.equalsIgnoreCase("yes"));
-        System.out.println("Game Over. Thanks for playing!");
+            System.out.println("Game Over. Thanks for playing!");
+
     }
     public static String hangman(int tries){
         if(tries == 1){
