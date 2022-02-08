@@ -8,6 +8,7 @@ public class hangman {
         String wordToFind = "magic";
         char[] wordFound = new char[wordToFind.length()];
         ArrayList<String> missed = new ArrayList<>();
+
         for (int i = 0; i < wordFound.length; i++){
             wordFound[i] = '_';
         }
@@ -21,8 +22,7 @@ public class hangman {
                 if(guess.length() > 1){
                     guess = guess.substring(0,1);
                 }
-                if(!missed.contains(guess)){
-                    if(wordToFind.contains(guess)){
+                if(!missed.contains(guess) && wordToFind.contains(guess)){
                         int index = wordToFind.indexOf(guess);
 
                         //If statement to a correct char to correct index in slot.
@@ -30,7 +30,6 @@ public class hangman {
                             wordFound[index] = guess.charAt(0);
                             index = wordToFind.indexOf(guess, index +1);
                         }
-                    }
                     else {
                         wrong++;
                     }
