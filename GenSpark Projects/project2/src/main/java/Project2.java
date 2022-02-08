@@ -62,7 +62,6 @@ public class Project2 {
 
             System.out.println("Play again? (y / n)");
             input.nextLine();
-//            rematch = input.nextLine();
             try{
                 rematch = input.nextLine();
             } catch (Exception e){
