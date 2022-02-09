@@ -12,8 +12,10 @@ public class hangman {
         for (int i = 0; i < wordFound.length; i++){
             wordFound[i] = '_';
         }
+        int highScore = 0;
         int wrong = 0;
         int maxErr = 6;
+        int playerScore = maxErr - wrong;
         String rematch = "";
         //Main loop for game.
             while(wrong < maxErr || rematch.equalsIgnoreCase("yes")){
