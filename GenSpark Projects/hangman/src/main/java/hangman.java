@@ -1,3 +1,4 @@
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -15,7 +16,7 @@ public class hangman {
         int highScore = 0;
         int wrong = 0;
         int maxErr = 6;
-        int playerScore = maxErr - wrong;
+        int playerScore;
         String rematch = "";
         //Main loop for game.
             while(wrong < maxErr || rematch.equalsIgnoreCase("yes")){
@@ -24,14 +25,15 @@ public class hangman {
                 if(guess.length() > 1){
                     guess = guess.substring(0,1);
                 }
-                if(!missed.contains(guess) && wordToFind.contains(guess)){
+                if(!missed.contains(guess)){
+                    if (wordToFind.contains(guess)) {
                         int index = wordToFind.indexOf(guess);
-
                         //If statement to a correct char to correct index in slot.
-                        if(index >= 0){
+                        if (index >= 0) {
                             wordFound[index] = guess.charAt(0);
-                            index = wordToFind.indexOf(guess, index +1);
+                            index = wordToFind.indexOf(guess, index + 1);
                         }
+                    }
                     else {
                         wrong++;
                     }
@@ -48,7 +50,12 @@ public class hangman {
                 System.out.println(makeWord.toString());
 
                 if(wordToFind.contentEquals(new String(wordFound))){
-                    System.out.println("You win!!");
+                    playerScore = maxErr-wrong;
+                    System.out.println("You win!!" + "You scored: " + playerScore);
+                    if (playerScore > highScore){
+                        highScore = playerScore;
+                        System.out.println("Congratulations, you set the new High Score!");
+                    }
                     System.out.println("Would you like to play again? (yes/no)");
                     input.nextLine();
                     rematch = input.nextLine();
