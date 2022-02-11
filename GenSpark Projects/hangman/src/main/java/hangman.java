@@ -1,13 +1,21 @@
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class hangman {
-    public static void main(String [] args){
+    public static void main(String [] args) throws IOException {
+//        HangManTemp game = new HangManTemp();
+//        game.startGame();
+
         Scanner input = new Scanner(System.in);
-        String wordToFind = "magic";
-        char[] wordFound = new char[wordToFind.length()];
+        //Getting user information.
+        intro();
+        String magicWord = "magic";
+        char[] wordFound = new char[magicWord.length()];
         ArrayList<String> missed = new ArrayList<>();
 
         for (int i = 0; i < wordFound.length; i++){
@@ -16,7 +24,7 @@ public class hangman {
         int highScore = 0;
         int wrong = 0;
         int maxErr = 6;
-        int playerScore;
+        int playerScore = 0;
         String rematch = "";
         //Main loop for game.
             while(wrong < maxErr || rematch.equalsIgnoreCase("yes")){
@@ -25,13 +33,14 @@ public class hangman {
                 if(guess.length() > 1){
                     guess = guess.substring(0,1);
                 }
+                //Check whether the guess is already in the
                 if(!missed.contains(guess)){
-                    if (wordToFind.contains(guess)) {
-                        int index = wordToFind.indexOf(guess);
+                    if (magicWord.contains(guess)) {
+                        int index = magicWord.indexOf(guess);
                         //If statement to a correct char to correct index in slot.
                         if (index >= 0) {
                             wordFound[index] = guess.charAt(0);
-                            index = wordToFind.indexOf(guess, index + 1);
+                            index = magicWord.indexOf(guess, index + 1);
                         }
                     }
                     else {
@@ -47,9 +56,9 @@ public class hangman {
                         makeWord.append(" ");
                     }
                 }
-                System.out.println(makeWord.toString());
-
-                if(wordToFind.contentEquals(new String(wordFound))){
+                System.out.println(makeWord);
+                //If the correct word is guessed!
+                if(magicWord.contentEquals(new String(wordFound))){
                     playerScore = maxErr-wrong;
                     System.out.println("You win!!" + "You scored: " + playerScore);
                     if (playerScore > highScore){
@@ -88,10 +97,20 @@ public class hangman {
                         wordFound[i] = '_';
                     }
                 }
-
             }
+        BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/leadboard.text",true));
+        writer.write(first + " " + last + ": " + playerScore);
+        writer.newLine();
+        writer.close();
             System.out.println("Game Over. Thanks for playing!");
-
+    }
+    public static void intro(){
+        Scanner input = new Scanner(System.in);
+        System.out.println("Please enter your first name:");
+        String first = input.nextLine();
+        System.out.println("Now last name:");
+        String last = input.nextLine();
+        System.out.println("Thank you "+ first + " " + last + " let's play hangman!");
     }
     public static String hangman(int tries){
         if(tries == 1){
