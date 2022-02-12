@@ -117,7 +117,7 @@ public class HangManTemp {
             }
         }
         BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/leadboard.text",true));
-        writer.write(first + " " + last + ": " + playerScore);
+//        writer.write(first + " " + last + ": " + playerScore);
         writer.newLine();
         writer.close();
         System.out.println("Game Over. Thanks for playing!");

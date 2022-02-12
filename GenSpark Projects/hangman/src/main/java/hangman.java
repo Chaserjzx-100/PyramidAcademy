@@ -1,19 +1,23 @@
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.SQLOutput;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Scanner;
+import java.util.*;
 
 public class hangman {
     public static void main(String [] args) throws IOException {
 //        HangManTemp game = new HangManTemp();
 //        game.startGame();
-
         Scanner input = new Scanner(System.in);
         //Getting user information.
-        intro();
+        System.out.println("Please enter your first name:");
+        String first = input.nextLine();
+        System.out.println("Now last name:");
+        String last = input.nextLine();
+
+        intro(first,last);
         String magicWord = "magic";
         char[] wordFound = new char[magicWord.length()];
         ArrayList<String> missed = new ArrayList<>();
@@ -21,7 +25,6 @@ public class hangman {
         for (int i = 0; i < wordFound.length; i++){
             wordFound[i] = '_';
         }
-        int highScore = 0;
         int wrong = 0;
         int maxErr = 6;
         int playerScore = 0;
@@ -40,7 +43,6 @@ public class hangman {
                         //If statement to a correct char to correct index in slot.
                         if (index >= 0) {
                             wordFound[index] = guess.charAt(0);
-                            index = magicWord.indexOf(guess, index + 1);
                         }
                     }
                     else {
@@ -61,9 +63,11 @@ public class hangman {
                 if(magicWord.contentEquals(new String(wordFound))){
                     playerScore = maxErr-wrong;
                     System.out.println("You win!!" + "You scored: " + playerScore);
-                    if (playerScore > highScore){
-                        highScore = playerScore;
+                    if (playerScore > currHighScore()){
                         System.out.println("Congratulations, you set the new High Score!");
+                    }
+                    if (playerScore == currHighScore()){
+                        System.out.println("Nice, you tied with the High Score!");
                     }
                     System.out.println("Would you like to play again? (yes/no)");
                     input.nextLine();
@@ -98,19 +102,36 @@ public class hangman {
                     }
                 }
             }
+            buffer(first,last,playerScore);
+            System.out.println("Game Over. Thanks for playing!");
+    }
+    public static void intro(String first, String last){
+        System.out.println("Thank you "+ first + " " + last + " let's play hangman!");
+    }
+    public static void buffer(String first, String last, int playerScore) throws IOException {
         BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/leadboard.text",true));
         writer.write(first + " " + last + ": " + playerScore);
         writer.newLine();
         writer.close();
-            System.out.println("Game Over. Thanks for playing!");
     }
-    public static void intro(){
-        Scanner input = new Scanner(System.in);
-        System.out.println("Please enter your first name:");
-        String first = input.nextLine();
-        System.out.println("Now last name:");
-        String last = input.nextLine();
-        System.out.println("Thank you "+ first + " " + last + " let's play hangman!");
+    public static int currHighScore() throws IOException{
+        String fileName = "src/main/resources/leadboard.text";
+        Path path = Paths.get(fileName);
+        Scanner read = new Scanner(path);
+        List<Integer> getMax = new ArrayList();
+        while (read.hasNextLine()){
+            String line = read.nextLine();
+            char num = line.charAt(line.length()-1);
+            String value = String.valueOf(num);
+            int number = Integer.parseInt(value);
+            getMax.add(number);
+        }
+        int largest = Collections.max(getMax);
+//        if(score > largest)
+//            largest = score;
+//        else
+//            return largest;
+        return largest;
     }
     public static String hangman(int tries){
         if(tries == 1){
