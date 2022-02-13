@@ -1,4 +1,5 @@
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -101,7 +102,11 @@ public class hangman {
                     }
                 }
             }
-            buffer(first,last,playerScore);
+            try {
+                buffer(first, last, playerScore);
+            } catch (Exception e){
+                throw new FileNotFoundException("Cannot locate file");
+            }
             System.out.println("Game Over. Thanks for playing!");
     }
     public static String intro(String first, String last){
