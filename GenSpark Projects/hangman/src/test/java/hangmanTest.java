@@ -25,9 +25,6 @@ class hangmanTest {
     void currentScore() throws IOException {
         assertNotEquals(5, hangman.currHighScore());
     }
-    @Test
-    void buffer(){}
-
     @AfterEach
     void tearDown() {
     }
