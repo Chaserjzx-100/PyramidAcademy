@@ -8,8 +8,7 @@ import java.util.*;
 
 public class hangman {
     public static void main(String [] args) throws IOException {
-//        HangManTemp game = new HangManTemp();
-//        game.startGame();
+
         Scanner input = new Scanner(System.in);
         //Getting user information.
         System.out.println("Please enter your first name:");
@@ -105,8 +104,8 @@ public class hangman {
             buffer(first,last,playerScore);
             System.out.println("Game Over. Thanks for playing!");
     }
-    public static void intro(String first, String last){
-        System.out.println("Thank you "+ first + " " + last + " let's play hangman!");
+    public static String intro(String first, String last){
+        return ("Thank you "+ first + " " + last + " let's play hangman!");
     }
     public static void buffer(String first, String last, int playerScore) throws IOException {
         BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/leadboard.text",true));
