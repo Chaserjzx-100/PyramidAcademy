@@ -126,10 +126,6 @@ public class hangman {
             getMax.add(number);
         }
         int largest = Collections.max(getMax);
-//        if(score > largest)
-//            largest = score;
-//        else
-//            return largest;
         return largest;
     }
     public static String hangman(int tries){
